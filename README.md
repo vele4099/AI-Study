@@ -11,7 +11,7 @@ This README covers:
 
 ---
 
-## 🚀 Requirements
+## Requirements
 
 Make sure you have these installed before running anything:
 
@@ -26,7 +26,7 @@ If you're using **GitHub Codespaces**, most of this is already set up for you.
 
 ---
 
-## 🧩 Project Structure (quick overview)
+## Project Structure (quick overview)
 
 AI-Study/
 backend/
