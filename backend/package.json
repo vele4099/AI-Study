@@ -15,6 +15,6 @@
     "mongoose": "^9.10.4"
   },
   "devDependencies": {
-    "node-dev": "^8.0.0"
+    "node-dev": "^6.3.0"
   }
 }
