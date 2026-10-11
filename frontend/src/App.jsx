@@ -1,22 +1,27 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home.jsx";
-import TutorDashboard from "./pages/TutorDashboard.jsx";
-import Assignments from "./pages/Assignments.jsx";
-import StudyTools from "./pages/StudyTools.jsx";
+import Parse from "./pages/Parse.jsx";
+import BackendStatus from "./pages/BackendStatus.jsx";
+import Auth from "./pages/Auth.jsx";
+import Navbar from "./components/Navbar.jsx";
+import Footer from "./components/Footer.jsx";
 
-function App() {
+
+console.log("APP RENDERED");
+
+export default function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Navbar />
+
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<TutorDashboard />} />
-        <Route path="/assignments" element={<Assignments />} />
-        <Route path="/tools" element={<StudyTools />} />
+        <Route path="/parse" element={<Parse />} />
+        <Route path="/status" element={<BackendStatus />} />
+        <Route path="/auth" element={<Auth />} />
       </Routes>
-    </Router>
+
+      <Footer />
+    </BrowserRouter>
   );
 }
-
-export default App;

@@ -1,30 +1,50 @@
+// ===============================================
+// SERVER.JS — Main backend entry point
+// ===============================================
+import aiRoutes from "./routes/aiRoutes.js";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import connectDB from "./db.js";   // FIXED: default import
 import mongoose from "mongoose";
+import connectDB from "./db.js"; // MongoDB connection
 
 dotenv.config();
 
 const app = express();
+
+// ===============================================
+// MIDDLEWARE
+// ===============================================
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); // allows JSON body parsing
+app.use("/api/ai", aiRoutes); // POST /api/ai/parse
 
-// Connect to MongoDB
-connectDB();
+// ===============================================
+// DATABASE CONNECTION
+// ===============================================
+connectDB(); // connects to MongoDB using MONGO_URI
 
-// Simple test model
+// ===============================================
+// TEST MODEL (temporary)
+// ===============================================
+// This is only for verifying MongoDB works.
+// You will delete this once real models exist.
 const TestSchema = new mongoose.Schema({
   message: String,
   createdAt: { type: Date, default: Date.now }
 });
 const TestModel = mongoose.model("Test", TestSchema);
 
-// Routes
+// ===============================================
+// ROUTES
+// ===============================================
+
+// Root route
 app.get("/", (req, res) => {
   res.send("Server is running");
 });
 
+// MongoDB test route
 app.get("/api/test", async (req, res) => {
   try {
     const doc = await TestModel.create({ message: "MongoDB is working!" });
@@ -34,38 +54,9 @@ app.get("/api/test", async (req, res) => {
   }
 });
 
-// Start server
+// ===============================================
+// START SERVER
+// ===============================================
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);
 });
-// ===============================
-// 1. Imports & Config
-// ===============================
-
-// express setup
-// dotenv config
-// connectDB()
-
-// ===============================
-// 2. Middleware
-// ===============================
-
-// JSON parser
-// CORS
-// Auth middleware (later)
-
-// ===============================
-// 3. Routes
-// ===============================
-
-// /auth
-// /subjects
-// /notes
-// /decks
-// /cards
-// /study
-// /analytics
-
-// ===============================
-// 4. Server Start
-// ===============================

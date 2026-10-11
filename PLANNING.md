@@ -1,10 +1,9 @@
-# AI Study
+# AI USER STORIES  --- Description
 
 AI Study helps college students organize coursework, study effectively, and access AI-powered learning tools
     -Bulids FlashCards that cater to user Mastery
 
-
-The goal is to reduce time spent searching through Canvas, notes, assignments, and study resources.
+The goal is to build a responsive learning tool. It is meant to reduce time searching canvas or search engines. Listing courses by subject and using artificial intelligence to analyse the users comprehesion. 
 
 User Stories: 
 As a {BLAH}, I want {BLAH}, so I can [BLAH]

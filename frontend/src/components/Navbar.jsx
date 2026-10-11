@@ -1,17 +1,10 @@
-import { Link } from "react-router-dom";
-import "./Navbar.css";
-
 export default function Navbar() {
   return (
-    <nav className="nav">
-      <h2 className="logo">AI Study</h2>
-
-      <ul className="nav-links">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/dashboard">Dashboard</Link></li>
-        <li><Link to="/assignments">Assignments</Link></li>
-        <li><Link to="/tools">Study Tools</Link></li>
-      </ul>
+    <nav style={{ padding: "1rem", borderBottom: "1px solid var(--border)" }}>
+      <a href="/" style={{ marginRight: "1rem" }}>Home</a>
+      <a href="/parse" style={{ marginRight: "1rem" }}>AI Parser</a>
+      <a href="/status" style={{ marginRight: "1rem" }}>Backend Status</a>
+      <a href="/auth">Auth</a>
     </nav>
   );
 }
