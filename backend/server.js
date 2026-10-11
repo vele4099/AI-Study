@@ -38,3 +38,34 @@ app.get("/api/test", async (req, res) => {
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);
 });
+// ===============================
+// 1. Imports & Config
+// ===============================
+
+// express setup
+// dotenv config
+// connectDB()
+
+// ===============================
+// 2. Middleware
+// ===============================
+
+// JSON parser
+// CORS
+// Auth middleware (later)
+
+// ===============================
+// 3. Routes
+// ===============================
+
+// /auth
+// /subjects
+// /notes
+// /decks
+// /cards
+// /study
+// /analytics
+
+// ===============================
+// 4. Server Start
+// ===============================

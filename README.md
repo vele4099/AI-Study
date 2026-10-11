@@ -1,15 +1,27 @@
 # AI-Study
+## Development Server
+We use `node-dev` instead of `nodemon` because nodemon’s dependency chain
+contains multiple unresolved vulnerabilities.
+
+Install dev dependencies:
+npm install
+
+Run the backend:
+npm run dev
 
 
 ## Frontend Setup
 *Devs
 cd frontend - (ensure youre in "frontend" directory)
 npm install - (install dependancies)
+Run the frontend:
 npm run dev
 
 ## Backend Setup
 cd backend - (ensure youre in "backend" directory)
 npm install - (install dependancies)
+
+Run the backend:
 npm run dev
 
 AI‑Study is meant to stay simple at the start. The goal right now is just getting the structure in place so everyone can see where things will go. The frontend is set up with basic pages and navigation, and the backend is wired up enough to expand later. Nothing fancy yet — this is just the foundation.
