@@ -9,7 +9,6 @@ This README covers:
 - What’s currently working
 - What’s still in progress
 
----
 
 ## Requirements
 
@@ -22,9 +21,6 @@ Make sure you have these installed before running anything:
 - **VS Code** (recommended)
 - **GitHub account** (for Codespaces access)
 
-If you're using **GitHub Codespaces**, most of this is already set up for you.
-
----
 
 ## Project Structure (quick overview)
 

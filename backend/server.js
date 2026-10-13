@@ -60,3 +60,5 @@ app.get("/api/test", async (req, res) => {
 app.listen(process.env.PORT, () => {
   console.log(`Server running on port ${process.env.PORT}`);
 });
+// use this code to connect to MD
+//mongoose.connect(process.env.Mongo_URI).then(() => console.log('MongoDb connected')).catch(err => console.(err))
