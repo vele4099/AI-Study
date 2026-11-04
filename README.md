@@ -1,81 +1,67 @@
-# AI-Study — Project Starter
+# AI Study Gen 
+### Specification and Techincal Plan
 
-Welcome to the AI-Study project! This repo is the early foundation for a study tool that blends spaced repetition, active recall, and AI-powered parsing. The goal right now is simple: build a clean base so the team can jump in without getting lost.
+## Planned WebPages
+### 1. Auth:
+    - Login
+    - registration
+    - session handling 
+### 2. Homepage/DashBoard
+    - overview 
+    - daily recap 
+    - assignment priority tracker 
+    - quick-start study decks 
+    - analysis visual (UI - Stretch)
+### 3. Study 
+    - Spaced Repitition flashcard interface 
+    - active recall session (OPEN TO IDEAS)
+    - Study Timer (promodo)
+### 4. AI Chat 
+    #### (NOTE NOT AN MVP < AI for "dynamic" flashcards is> --- in other words ai is a backend function and will be updating flashcards inside the "STUDY" Page)
+    - conversational study assistant 
+    - contextual Q&A over notes
+### 5. Upload/Input (upload)
+    - Batch text/note
+    - Live card preview & single key-value staging: preview front/back pairs as they get generated or entered, compiling an in-memory reference file the client validates before hitting the database
+    - Validation checks for empty fields, duplicate terms, character limits, and validates that Ollama returned valid JSON arrays matching the exact card schema before saving
+    - Ollama card generation 
 
-This README covers:
-- What you need installed
-- How to run the app (frontend + backend)
-- How the project is structured
-- What’s currently working
-- What’s still in progress
+### 6. Analysis/Analytics
+    - Retention rates
+    - Study Streak
+    - Completetion metrics
+    - Session History
+
+### Reversible Navigation: Users can safely exit any active workflow with zero state locking or accidental data loss. (e.g., leaving a session with a Pomodoro timer active at T - 04:15
 
 
-## Requirements
 
-Make sure you have these installed before running anything:
+## Executive Summary and Obetective 
+### 1. Scope of the System Architechture
 
-- **Node.js** (v18+ recommended)
-- **npm** (comes with Node)
-- **Git**
-- **MongoDB Atlas account** or local MongoDB
-- **VS Code** (recommended)
-- **GitHub account** (for Codespaces access)
+- Stack: MERN (MongoDB, Express, React, Node.js).
 
+- Database Design: Referencing Mongoose schemas (separate collections for Decks and Cards rather than unbounded nesting).
 
-## Project Structure (quick overview)
+- AI Pipeline: Local Ollama backend for zero-cost, local flashcard generation and conversational study support.
 
-AI-Study/
-backend/
-server.js
-db.js
-routes/
-controllers/
-models/   (coming soon)
+### 2. Functional Requirements
+- Batch Input & Generation: Client validates raw batch text, feeds it to the local Ollama endpoint via Express, parses structured JSON, and previews cards before persistence.
 
-frontend/
-src/
-App.jsx
-main.jsx
-index.css
-components/
-Navbar.jsx
-Footer.jsx
-pages/
-Home.jsx
-Parse.jsx
-BackendStatus.jsx
-Auth.jsx
-utils/
-api.js
+- Spaced Repetition System (SRS): Interval tracking based on card ratings (e.g., Easy, Medium, Hard) to schedule next review timestamps.
 
-**Frontend** runs on Vite (React).  
-**Backend** runs on Express + MongoDB.
+- Assignment Priority Tracker: Dashboard task queue sorted by due date and difficulty/weight.
 
-The goal is to keep things readable and modular so nobody gets lost.
+- Study Timer: Integrated focus timer (Pomodoro/stopwatch) attached to study sessions.
 
----
+- Interactive AI Chat: Context-grounded assistant for concept breakdown and active recall testing.
 
-## 🖥 Running the Frontend
+- Progress Analytics: Visual summaries of cards reviewed, retention accuracy, and daily time logged.
 
-Inside `/frontend`:
+### 3. Non-Functional Requirements
 
-```bash
-npm install
-npm run dev
+- Performance: Generation batch processing and UI preview feedback under acceptable local latency constraints.
 
-```
-This starts the React app on port 5173.
-If you're in Codespaces, it will auto-forward the port and show a link.
+- Data Integrity: Strict Mongoose validation and schema references preventing orphaned cards.
 
-#FrontEnd
-- Clean routing
-- Navbar + Footer
-- Basic page structure
-- Backend status checker
-- Text parser UI (AI integration coming soon)
-#BackEnd
-- MongoDB connection
-- Test route (/api/test)
-- Basic page structure
-- AI route scaffold (/api/ai/parse)
-- Basic Express server
+- Security & Auth: Secure JWT or session-based user authentication protecting user decks and notes.

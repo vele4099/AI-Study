@@ -1,10 +1,48 @@
-export default function Navbar() {
+import React from "react";
+import "./Navbar.css";
+
+export default function Navbar({ activePage, setActivePage }) {
   return (
-    <nav style={{ padding: "1rem", borderBottom: "1px solid var(--border)" }}>
-      <a href="/" style={{ marginRight: "1rem" }}>Home</a>
-      <a href="/parse" style={{ marginRight: "1rem" }}>AI Parser</a>
-      <a href="/status" style={{ marginRight: "1rem" }}>Backend Status</a>
-      <a href="/auth">Auth</a>
+    <nav className="navbar">
+      <div className="navbar-brand">AI Study Deck</div>
+      <ul className="navbar-links">
+        <li>
+          <a
+            href="#home"
+            className={activePage === "home" ? "active" : ""}
+            onClick={(e) => {
+              e.preventDefault();
+              setActivePage("home");
+            }}
+          >
+            Dashboard
+          </a>
+        </li>
+        <li>
+          <a
+            href="#study"
+            className={activePage === "study" ? "active" : ""}
+            onClick={(e) => {
+              e.preventDefault();
+              setActivePage("study");
+            }}
+          >
+            Study & Builder
+          </a>
+        </li>
+        <li>
+          <a
+            href="#auth"
+            className={activePage === "auth" ? "active" : ""}
+            onClick={(e) => {
+              e.preventDefault();
+              setActivePage("auth");
+            }}
+          >
+            Account
+          </a>
+        </li>
+      </ul>
     </nav>
   );
 }

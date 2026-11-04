@@ -1,7 +1,10 @@
+import React from "react";
+import "./Footer.css";
+
 export default function Footer() {
   return (
-    <footer style={{ padding: "1rem", borderTop: "1px solid var(--border)" }}>
-      <p>AI Study App © 2026</p>
+    <footer className="footer">
+      <p>&copy; {new Date().getFullYear()} AI Study App. Local-first card generation.</p>
     </footer>
   );
 }

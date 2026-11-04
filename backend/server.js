@@ -1,64 +1,41 @@
-// ===============================================
-// SERVER.JS — Main backend entry point
-// ===============================================
-import aiRoutes from "./routes/aiRoutes.js";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
-import connectDB from "./db.js"; // MongoDB connection
 
+// Load environment variables from backend/.env
 dotenv.config();
 
 const app = express();
 
-// ===============================================
-// MIDDLEWARE
-// ===============================================
+// Global Middleware
 app.use(cors());
-app.use(express.json()); // allows JSON body parsing
-app.use("/api/ai", aiRoutes); // POST /api/ai/parse
+app.use(express.json());
 
-// ===============================================
-// DATABASE CONNECTION
-// ===============================================
-connectDB(); // connects to MongoDB using MONGO_URI
-
-// ===============================================
-// TEST MODEL (temporary)
-// ===============================================
-// This is only for verifying MongoDB works.
-// You will delete this once real models exist.
-const TestSchema = new mongoose.Schema({
-  message: String,
-  createdAt: { type: Date, default: Date.now }
-});
-const TestModel = mongoose.model("Test", TestSchema);
-
-// ===============================================
-// ROUTES
-// ===============================================
-
-// Root route
-app.get("/", (req, res) => {
-  res.send("Server is running");
-});
-
-// MongoDB test route
-app.get("/api/test", async (req, res) => {
+// Database Connection
+const connectDB = async () => {
   try {
-    const doc = await TestModel.create({ message: "MongoDB is working!" });
-    res.json({ success: true, doc });
+    const connStr = process.env.DB_URI;
+    if (!connStr) {
+      throw new Error("DB_URI is not defined in your .env file.");
+    }
+    await mongoose.connect(connStr);
+    console.log("MongoDB connected successfully");
   } catch (err) {
-    res.status(500).json({ success: false, error: err.message });
+    console.error("Database connection error:", err.message);
+    process.exit(1);
   }
+};
+
+connectDB();
+
+// Health Check Route
+app.get("/api/health", (req, res) => {
+  res.status(200).json({ status: "online", timestamp: new Date().toISOString() });
 });
 
-// ===============================================
-// START SERVER
-// ===============================================
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on port ${process.env.PORT}`);
+// Start Server
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Backend server running on http://localhost:${PORT}`);
 });
-// use this code to connect to MD
-//mongoose.connect(process.env.Mongo_URI).then(() => console.log('MongoDb connected')).catch(err => console.(err))
