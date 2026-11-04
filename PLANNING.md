@@ -1,112 +1,67 @@
-# AI Study — Planning & User Stories
+# AI Study Gen 
+### Specification and Techincal Plan
 
-This document outlines the vision, learning techniques, and user stories behind AI Study. 
+## Planned WebPages
+### 1. Auth:
+    - Login
+    - registration
+    - session handling 
+### 2. Homepage/DashBoard
+    - overview 
+    - daily recap 
+    - assignment priority tracker 
+    - quick-start study decks 
+    - analysis visual (UI - Stretch)
+### 3. Study 
+    - Spaced Repitition flashcard interface 
+    - active recall session (OPEN TO IDEAS)
+    - Study Timer (promodo)
+### 4. AI Chat 
+    #### (NOTE NOT AN MVP < AI for "dynamic" flashcards is> --- in other words ai is a backend function and will be updating flashcards inside the "STUDY" Page)
+    - conversational study assistant 
+    - contextual Q&A over notes
+### 5. Upload/Input (upload)
+    - Batch text/note
+    - Live card preview & single key-value staging: preview front/back pairs as they get generated or entered, compiling an in-memory reference file the client validates before hitting the database
+    - Validation checks for empty fields, duplicate terms, character limits, and validates that Ollama returned valid JSON arrays matching the exact card schema before saving
+    - Ollama card generation 
 
----
+### 6. Analysis/Analytics
+    - Retention rates
+    - Study Streak
+    - Completetion metrics
+    - Session History
 
-## Project Description
-
-AI Study is a responsive learning tool designed to help college students organize coursework, study effectively, and access AI-powered learning tools without digging through Canvas or random search engines.
-
-The app blends:
-- Smart organization
-- AI comprehension analysis
-- Adaptive flashcards
-- Active recall
-- Pomodoro-style timing
-- Surprise quizzes
-- Topic-based mastery tracking
-
-The goal is simple: **reduce friction, increase clarity, and help students learn faster.**
+### Reversible Navigation: Users can safely exit any active workflow with zero state locking or accidental data loss. (e.g., leaving a session with a Pomodoro timer active at T - 04:15
 
 
-## Learning Techniques We Support
 
-### 1. Pomodoro & Adaptive Timing
-- Classic Pomodoro (25/5 cycles)
-- Custom timing (user-defined)
-- Adaptive timing based on fatigue or mastery
-- Session logs for reflection
+## Executive Summary and Obetective 
+### 1. Scope of the System Architechture
 
-### 2. Active Recall Tools
-- Fill-in-the-blank mini quizzes
-- Topic-based micro-assessments
-- Surprise quizzes (4–5 random questions pulled from user topics)
+- Stack: MERN (MongoDB, Express, React, Node.js).
 
-### 3. Mastery-Based Flashcards
-- AI-generated flashcards from notes
-- Difficulty levels (easy → hard)
-- Spaced repetition scheduling
-- Mastery tracking per topic
+- Database Design: Referencing Mongoose schemas (separate collections for Decks and Cards rather than unbounded nesting).
 
-### 4. Topic Detection & Organization
-When users upload notes:
-- AI identifies the subject (Bio, Chem, Math, etc.)
-- Automatically organizes content
-- Adds new concepts to memory
-- Generates flashcards + quiz questions
-- Tracks mastery per topic
+- AI Pipeline: Local Ollama backend for zero-cost, local flashcard generation and conversational study support.
 
-This turns raw notes into structured learning material.
+### 2. Functional Requirements
+- Batch Input & Generation: Client validates raw batch text, feeds it to the local Ollama endpoint via Express, parses structured JSON, and previews cards before persistence.
 
-### Course Management
-- Course list
-- Assignment list
-- Priority + effort estimation
-- Deadline dashboard
+- Spaced Repetition System (SRS): Interval tracking based on card ratings (e.g., Easy, Medium, Hard) to schedule next review timestamps.
 
-### AI Tools
-- Note parser
-- Summary generator
-- Study guide builder
-- Flashcard generator
-- Topic detection + organization
+- Assignment Priority Tracker: Dashboard task queue sorted by due date and difficulty/weight.
 
-### Study Tools
-- Pomodoro timer
-- Adaptive timer
-- Session tracker
-- Active recall quizzes
-- Surprise quizzes
-- Mastery-based flashcards
+- Study Timer: Integrated focus timer (Pomodoro/stopwatch) attached to study sessions.
 
-### Analytics
-- Study streaks
-- Mastery progress
-- Time spent per subject
-- Topic-based performance
+- Interactive AI Chat: Context-grounded assistant for concept breakdown and active recall testing.
 
----
+- Progress Analytics: Visual summaries of cards reviewed, retention accuracy, and daily time logged.
 
-## Notes for the Team
+### 3. Non-Functional Requirements
 
-This project is early-stage. The structure is intentionally simple right now:
-- Clean frontend routing
-- Basic backend endpoints
-- Placeholder pages
-- Space for AI integration later
+- Performance: Generation batch processing and UI preview feedback under acceptable local latency constraints.
 
-As we build, keep things modular and readable. Small components. Clear naming. No over-engineering.
+- Data Integrity: Strict Mongoose validation and schema references preventing orphaned cards.
 
-If something feels unclear, ask Andy — he’s building the vibe and direction.
-OR Dont IM COOL
----
-
-## Next Steps (short-term)
-
-- Finalize backend routes for assignments + notes
-- Build flashcard model + mastery logic
-- Add AI parsing + summary generation
-- Create dashboard UI
-- Add user authentication
-- Build quiz engine (active recall + surprise mode)
-- Add Pomodoro + adaptive timing
-
----
-
-## Closing
-
-This is the planning doc — not the code doc.  
-It’s here to keep us aligned, inspired, and moving in the same direction.
-
-Let’s build something genuinely helpful.
+- Security & Auth: Secure JWT or session-based user authentication protecting user decks and notes.
