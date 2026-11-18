@@ -1,34 +1,71 @@
-import React from "react";
-import "./HomePage.css";
+import React, { useState } from "react";
+import FlashcardLayout from "../components/FlashcardLayout.jsx";
 
-export default function HomePage({ onNavigateToStudy }) {
+const SINGLE_WORD_REGEX = /^[A-Za-z]+(?:['\-][A-Za-z]+)?$/;
+const DEFINITION_REGEX = /^\s*([A-Za-z0-9,.'";:()\-]+\s+)+[A-Za-z0-9,.'";:()\-]+\s*$/;
+
+export default function HomePage() {
+  const [cards, setCards] = useState([]);
+  const [word, setWord] = useState("");
+  const [definition, setDefinition] = useState("");
+  const [error, setError] = useState("");
+
+  const handleAddCard = (e) => {
+    e.preventDefault();
+    const cleanWord = word.trim();
+    const cleanDef = definition.trim();
+
+    if (!cleanWord || !cleanDef) {
+      setError("Both term and definition are required.");
+      return;
+    }
+
+    if (!SINGLE_WORD_REGEX.test(cleanWord)) {
+      setError("Term must be exactly one valid word without spaces or numbers.");
+      return;
+    }
+
+    if (!DEFINITION_REGEX.test(cleanDef)) {
+      setError("Definition must contain at least two words.");
+      return;
+    }
+
+    setError("");
+    setCards([...cards, { id: Date.now(), word: cleanWord, definition: cleanDef }]);
+    setWord("");
+    setDefinition("");
+  };
+
   return (
-    <main className="homepage-container">
-      <section className="hero-banner">
-        <h1>Master Your Study Material</h1>
-        <p>
-          Generate spaced repetition cards, run active recall intervals, and organize 
-          your assignments without external API costs. GO STUDY!
-        </p>
-        <button className="primary-btn" onClick={onNavigateToStudy}>
-          Start Flashcards
-        </button>
-      </section>
+    <main style={{ maxWidth: "600px", margin: "40px auto", padding: "0 16px", fontFamily: "sans-serif" }}>
+      <h2>Card Builder</h2>
 
-      <section className="dashboard-grid">
-        <div className="dashboard-card">
-          <h3>Assignment Tracker</h3>
-          <p>Prioritize coursework by upcoming deadlines and task weight.</p>
-        </div>
-        <div className="dashboard-card">
-          <h3>Daily Review</h3>
-          <p>0 cards scheduled for review today. Keep your streak active.</p>
-        </div>
-        <div className="dashboard-card">
-          <h3>AI Engine</h3>
-          <p>Local Ollama instance ready for structured card generation.</p>
-        </div>
-      </section>
+      <form onSubmit={handleAddCard} style={{ display: "flex", flexDirection: "column", gap: "10px", marginBottom: "16px" }}>
+        <input
+          type="text"
+          placeholder="Single word (e.g., Photosynthesis)"
+          value={word}
+          onChange={(e) => setWord(e.target.value)}
+          style={{ padding: "8px" }}
+        />
+        <input
+          type="text"
+          placeholder="Definition (at least 2 words)"
+          value={definition}
+          onChange={(e) => setDefinition(e.target.value)}
+          style={{ padding: "8px" }}
+        />
+        <button type="submit" style={{ padding: "10px", cursor: "pointer" }}>Add to Deck</button>
+      </form>
+
+      {error && <p style={{ color: "#ef4444", margin: "0 0 16px", fontSize: "0.9rem" }}>{error}</p>}
+
+      <h3>Deck Preview ({cards.length})</h3>
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+        {cards.map((c) => (
+          <FlashcardLayout key={c.id} word={c.word} definition={c.definition} />
+        ))}
+      </div>
     </main>
   );
 }
